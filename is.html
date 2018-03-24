@@ -1,0 +1,1434 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Osobní administrativa</title>
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+<link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+<link rel="stylesheet" type="text/css" href="/css/14/prvky.css">
+<link rel="stylesheet" type="text/css" href="/css/14/b.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/14/b-menu.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/14/b-panel-new.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/14/b-tisk.css" media="print">
+<script type="text/javascript" src="/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="/js/is-lib.js"></script>
+<script src="/js/log-kliknuto.js"></script>
+
+<script type="text/javascript"><!--
+$(document).ready(function(){
+
+	$(function() {
+		var skryt = [2,3,4,5,6,7,9,15,16,18,19,20,23,25,26,30,31,37,42];
+		for (var sid in skryt) {
+			$('#b'+skryt[sid]).hide();
+			$('#c'+skryt[sid]).hide();
+		};
+		var rozb = [];
+		for (var sid in rozb) {
+			$('#a'+rozb[sid]).hide();
+			$('#b'+rozb[sid]).show();
+			$('#d'+rozb[sid]).hide();
+		};
+		
+	});
+
+        var callback1 = function (e) {
+                var url_string = '/auth/index_ajax.pl';
+                var id_sekce = $(this).data('datas').ids;
+                var hodnota = $(this).data('datas').hdn;
+		var po = $(this).data('datas').idd;
+                $.ajax({
+                        type: 'POST',
+                        url: url_string,
+                        data: { 'akce': 'ups_rs', 'pole': id_sekce, 'hodnota': hodnota},
+                        success: function(dt){
+				if (dt != 'chyba') {
+					if (hodnota == '0') {
+						$('#d'+po).show();
+						$('#c'+po+' img').attr('title', 'Skrýt méně používané odkazy');
+					} else {
+						$('#d'+po).hide();
+						$('#c'+po+' img').attr('title', 'Skrýt a nadále neukazovat více odkazů');
+					}
+				}
+                        }
+                });
+        };
+	$(".XYZ").bind('click', callback1);
+	$(".XXZ").bind('click', callback1);
+
+
+var kvr = 1;
+var callback4 = function (e) {
+	var uh = kvr;
+	if (kvr == 1) {
+		$("#trvmodi").text('Sbalit všechny odkazy');
+		kvr = 0;
+		$(".TPA").hide();
+		$(".TPD").hide();
+		$(".TPC").hide();
+		$(".TPB").show();
+		$("#trpmods").hide();
+	$("#tstvr").css('display', 'inline');
+	} else {
+		$("#trvmodi").text('Rozbalit všechny odkazy');
+		kvr = 1;
+		$(".TPA").show();
+		$(".TPD").show();
+		$(".TPC").hide();
+		$(".TPB").hide();
+		$("#trpmods").show();
+	}
+	return false;
+};
+$("#trvmodi").bind('click', callback4);
+	$("#tstvr").hide();
+
+});
+//--></script>
+
+<script type="text/javascript"><!--
+$(document).ready(function(){
+
+	var callback10 = function () {
+		$("#skoj").toggle();
+		$("#skojd").toggle();
+	};
+	$("#skor").bind('click', callback10);
+
+});
+//--></script>
+
+<script type="text/javascript" src="/js/ui-panel-new.js"></script>
+<script type="text/javascript"><!--
+	var uiLang = "cs";
+	var uiSystem = "14";
+	var uiDesign = "b";
+	var uiPanelSkrytStr = "Skrýt panel";
+	var uiPanelZobrazitStr= "Zobrazit panel";
+$(document).ready(function(){
+	var callback_pp = function (e) {
+		var url_string = '/auth/rpanel_ajax_new.pl';
+		$.ajax({
+			type: 'POST',
+			url: url_string,
+			data: { "akce": "pszp", "stat_pravy_panel": 1 }
+		});
+	};
+	$("#ouskoS").bind('click', callback_pp);
+});
+
+//--></script>
+<link rel="stylesheet" href="/css/14/jquery-ui-1.11.4.css">
+<style>
+.postali:before {
+	content: "■ ";
+	font-family:"Arial Black";
+	color: blue;
+	font-size: 0.5em;
+	margin-right: 4px;
+}
+
+.postali {
+    padding-left: 1em; 
+    text-indent: -1em;
+background: 0;
+}
+
+.sep {
+	margin: 0 3px 0 3px;
+}
+
+#panel .portlet {
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
+.rozbal {
+  padding-right: 10px;
+  background: transparent url('/pics/design/14/p/a-rozbal.png') 100% 60% no-repeat;
+}
+
+.sbal {
+  padding-right: 10px;
+  background: transparent url('/pics/design/14/p/a-sbal.png') 100% 60% no-repeat;
+}
+
+a.sbal { background-image: url('/pics/design/14/p/a-sbal.png');
+}
+
+.sel_a, .sel_a:visited {
+	color: orange;
+}
+
+.button_p {
+    float: right;
+    margin-right: 3px;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.move {
+	cursor: move;
+}
+
+.port_con {
+	padding: 5px 5px 0px 5px;
+}
+
+.diar_ikony {
+	margin: 0px 10px 5px 10px;
+}
+
+.portlet-placeholder {
+	height: 100px;
+}
+
+#port-is .prispevek {
+	width: 270px;
+	padding: 5px;
+	margin: 3px 3px;
+	border: 1px solid #e3e3e3;
+	border-bottom-width: 3px;
+	background-color: #fff;
+}
+
+#port-is .prispevek .uryvek {
+	line-height: 1.4em;
+	height: 4.4em;
+	overflow: hidden;
+	color: #999;
+}
+
+.input_border_focus {
+	border-top-color: red!important;
+	border-bottom-color: red!important;
+	border-right-color: red!important;
+}
+
+.error_focus {
+    border-top: 1px solid red!important;
+    border-bottom: 1px solid red!important;
+    padding-right: 3;
+}
+
+.error_focus_first {
+    border-left: 1px solid red!important;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding-right: 3;
+}
+
+.error_focus_last {
+    border-right: 1px solid red!important;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-right: 3;
+}
+
+#prispevky .prispevek .uryvek {
+	/*font-size: 0.9rem;*/
+}
+
+
+</style>
+
+<script type="text/javascript" src="/js/jquery-ui-1.11.4.custom.min.js"></script>
+<script>
+
+var uloz_panel = function() {
+	var url = '/auth/rpanel_ajax_new.pl';
+	var first = 1;
+	var post_data = '';
+	$('#sort_panel').children('.portlet').each(function(i){
+		if (!first) {
+			post_data += '#';
+		}
+		first = 0;
+		var id = $(this).attr('id');
+		post_data += id + ':' + i;
+	});
+
+	$.post(url, {akce: "uloz_panel", panel_data: post_data, stat_pravy_panel: 1});
+
+	if ($('#sort_panel').children('.portlet').length < 1) {
+		$('#ouskoS').trigger('click');
+	}
+};
+
+var sort_ports = function() {
+	if ($.fn.sortable) { // design z
+		$('#sort_panel').sortable({	handle: ".move",
+					placeholder: "portlet-placeholder ui-state-highlight",
+					start: function(event, ui) {
+						$('.portlet-placeholder').height($(ui.item).height());
+						$(".button_p").tooltip("option", "disabled", true);
+					},
+					stop: function() {
+						$(".button_p").tooltip("option", "disabled", false);
+					},
+					update: function(event, ui) {
+						uloz_panel();
+					},
+					containment: "document"
+		});
+	}
+}
+
+var remove_port = function(e) {
+	var msg = 'Skutečně chcete odstranit prvek panelu?';
+	
+	var na = confirm(msg);
+
+	if (na) {
+		$(e.target).closest('.portlet').remove();
+		uloz_panel();
+	}
+}
+
+var stat_fnc = function(){
+        $("#panel").find("a").each(function(){
+
+		if ($(this).attr("href").match(/javascript/g) || $(this).attr("href").match(/stat_pravy_panel/g)) { // pokud je to javascript link alebo uz mame kluc, konec
+			return;
+		}
+
+                var search_prop = $(this).prop("search"); // ziskam cast url za otaznikom
+		var new_search;
+		if (search_prop) {
+			search_prop = search_prop.replace(/;$/g, "");
+			new_search = search_prop + ";stat_pravy_panel=1";
+		} else {
+			new_search = "stat_pravy_panel=1";
+		}
+                $(this).prop("search", new_search);
+        });
+};
+
+var reg_events = function() {
+
+	var s_auth = '/auth';
+
+	/* klik na tab */
+	$('#port_udalosti_aktivita h3 a, #port_vyveska_all a').off('click').click(function(e){
+		var id = $(e.target).attr('id');
+		if ($('#' + id + '_c').length) {
+			e.preventDefault();
+			var content_element = $('#' + id + '_c');
+			var is_visible = $(content_element).is(':visible');
+			$('.port_con').hide();
+			$('#port_udalosti_aktivita h3 a span, #port_vyveska_all a span').removeClass('sbal').addClass('rozbal');
+			$('#port_udalosti_aktivita h3 a, #port_vyveska_all a').removeClass('sel_a');
+			$(e.target).addClass('sel_a');
+
+			if (is_visible) {
+				$(content_element).hide();
+				$(e.target).children('span').removeClass('sbal');
+				$(e.target).children('span').addClass('rozbal');
+				$(e.target).removeClass('sel_a');
+
+			} else {
+				$(content_element).show();
+				$(e.target).children('span').addClass('sbal');
+				$(e.target).children('span').removeClass('rozbal');
+			}
+		}
+	});
+	$('#port_udalosti_aktivita h3 a span, #port_vyveska_all a span').off('click').click(function(e){
+		e.preventDefault();
+		$(e.target).parent().trigger('click');
+	});
+
+	$('.add_button').off('click').click(function() {
+		$('#port-zajimave .pridat_prispevek').slideToggle();
+	});
+
+	$('#panel .close_button').off('click').click(remove_port);
+
+	/* skryt obsahy */
+	$('.port_con').hide();
+	/* aktivuj prvy tab */
+	/*$('#port_udalosti_aktivita h3 a:first, #port_vyveska_all a:first').trigger('click');*/
+
+	if (!$.fn.tooltip) {
+		$.fn.tooltip = function(){};
+	}
+	$(".button_p").tooltip({hide: false, show: false});
+
+	$('input[name=vyber_zar]').off('change').change(function() {
+		/*$('.pridat_prispevek_zarazeni label').css('border-left-color', '').removeClass('input_border_focus');*/
+		$('.zar_wrap label').removeClass('error_focus').removeClass('error_focus_first').removeClass('error_focus_last');
+		$('.vyberte_zar').hide();
+	});
+
+	if (!$.fn.buttonset) {
+		$.fn.buttonset = function(){};
+	}
+	/* pridat prispevek - skryt zarazeni u tematickych for*/
+	$('input[name=vyber_typ]').off('change').change(function() {
+		/*$('.pridat_prispevek_typ label').css('border-left-color', '').removeClass('input_border_focus');*/
+		$('.typ_wrap label').removeClass('error_focus').removeClass('error_focus_first').removeClass('error_focus_last');
+		$('.vyberte_typ').hide();
+
+		if ($('input[name=vyber_typ]:checked').val() == 'temat') {
+			$('.pridat_prispevek_zarazeni label').css('border-left-color', '').removeClass('input_border_focus');
+	                $('.vyberte_zar label').hide();
+			/*$('.pridat_prispevek_zarazeni').buttonset("option", "disabled", true);
+			$('.nav_zarazeni').addClass('disabled_text');*/
+			$('.vyberte_zar_radek').hide();
+		} else {
+			/*$('.pridat_prispevek_zarazeni').buttonset("option", "disabled", false);
+			$('.nav_zarazeni label').removeClass('disabled_text');*/
+			$('.vyberte_zar_radek').show();
+		}
+	});
+
+	$('#otv_form').off('click').click(function(e) {
+		var vyb_val = $('input[name=vyber_typ]:checked').val();
+		var zar_val = $('input[name=vyber_zar]:checked').val();
+
+                if (vyb_val == 'temat') {
+                        $('#nove_vlakno_formular').attr('action', s_auth+'/diskuse/diskusni_forum_nastaveni');
+			$('#hidden_guz').attr('name', 'akce').val('new');
+                } else {
+
+			if (!zar_val && !vyb_val) {
+                                /*$('.pridat_prispevek_zarazeni label').addClass('input_border_focus').filter(':first').css('border-left-color', 'red');
+                                $('.pridat_prispevek_typ label').addClass('input_border_focus').filter(':first').css('border-left-color', 'red');*/
+				$('.typ_wrap label, .zar_wrap label').addClass('error_focus');
+				$('.typ_wrap label:first, .zar_wrap label:first').addClass('error_focus_first');
+				$('.typ_wrap label:last, .zar_wrap label:last').addClass('error_focus_last');
+				$('.vyberte_form').show();
+                                e.preventDefault();
+                                return;
+                        }
+
+			if (!zar_val) {
+				/*$('.pridat_prispevek_zarazeni label').addClass('input_border_focus').filter(':first').css('border-left-color', 'red');*/
+				$('.zar_wrap label').addClass('error_focus');
+				$('.zar_wrap label:last').addClass('error_focus_last');
+				$('.zar_wrap label:first').addClass('error_focus_first');
+				$('.vyberte_form').show();
+				e.preventDefault();
+				return;
+			}
+
+			if (!vyb_val) {
+				/*$('.pridat_prispevek_typ label').addClass('input_border_focus').filter(':first').css('border-left-color', 'red');*/
+				$('.typ_wrap label').addClass('error_focus');
+				$('.typ_wrap label:last').addClass('error_focus_last');
+				$('.typ_wrap label:first').addClass('error_focus_first');
+				$('.vyberte_form').show();
+				e.preventDefault();
+				return;
+			}
+
+			var zarazeni = zar_val.split(','); /* 0 -> id obecne forum, 1 -> plkarna*/
+                        var fid = zarazeni[0];
+                        if (vyb_val == 'plkarny') {
+                                fid = zarazeni[1];
+                        }
+                        $('#nove_vlakno_formular').attr('action', s_auth+'/diskuse/diskusni_forum');
+			$('#hidden_guz').val(fid);
+			$('#hidden_zal').prop('disabled', false);
+                }
+
+		$('input[name=vyber_typ], input[name=vyber_zar]').prop('disabled', true);
+	});
+
+	$('.odstranit_prispevek').off('click').click(function(e) {
+                var button = this;
+                $(button).removeClass('ui-icon-circle-close').removeClass('odstranit_prispevek').addClass('icon_pracuji');
+                var id = ($(button).closest('.prispevek').attr('id').split("_"))[1];
+                var hodnoceni = 'hodnoceni_'+id;
+                var params_obj = { uloz: 1, uzel_id: id, expiruje_za_tyden: 1};
+                params_obj[hodnoceni] = '-1';
+		e.stopPropagation();
+
+                $.post('/auth/rpanel_prispevky', params_obj, function(data) {
+                        $(button).closest('.prispevek').find('.uryvek').html('<strong>Příspěvek bude odstraněn.</strong><br /><span class="nedurazne">Změny se projeví po aktualizaci žebříčku.</span>');
+
+			$(button).parent().find('.odstranit_prispevek').off('click'); /* trosku hack, off sa musi volat na selectore z oni */
+                        $(button).css("cursor", "initial");
+			$(button).removeClass('odstranit_prispevek'); /*# dolezite, aby sa click nebindoval znovu*/
+			$(button).removeClass('icon_pracuji');
+			$('.refresh_zebricek').css('border', '1px solid red').removeClass('ui-icon-check').addClass('ui-icon-refresh');
+                });
+
+        });
+
+	$('.refresh_zebricek').off('click').click(function() {
+		var button = this;
+		$(button).removeClass('ui-icon-refresh').removeClass('ui-icon').addClass('icon_pracuji');
+		$(button).off('click');
+		$(button).tooltip('option', 'content', 'Aktualizuji žebříček...');
+
+		$.post('/auth/rpanel_prispevky', { prepocitat: 1 }, function(data) {
+			$(button).removeClass('icon_pracuji').addClass('ui-icon').addClass('ui-icon-check').css('border', 'none').tooltip('option', 'content', 'Aktualizovat žebříček');
+                });
+
+	});
+
+	$('.prispevek .uryvek').off('hover').hover(function(){
+		$(this).addClass('uryvek_active');
+	}, function(){
+		$(this).removeClass('uryvek_active');
+	}).off('click').click(function(e){
+		if (e.which == 1) {
+			$(this).find('a')[0].click(); /* [0] pretoze chcem nativni DOM oblekt elementu a nativni click (ne jquery) */
+		}
+	});
+
+	$('.prispevek').off('hover').hover(function(){
+		$(this).find('.oznac_prectene, .odstranit_prispevek').css('visibility', 'visible');
+	}, function(){
+		$(this).find('.oznac_prectene, .odstranit_prispevek').css('visibility', 'hidden');
+	});
+
+	$('.oznac_prectene').off('click').click(function(e){
+		var id = $(e.target).closest('.prispevek').attr('id');
+		var uzel_id = (id.split("_"))[1];
+		$('#'+id).slideUp(400, function(){
+			var prisp = $('#prispevky .prispevek:visible');
+			if (prisp.length <= 0) {
+				$('.hlaska_zadne_prispevky').slideDown();
+			}
+		});
+		e.stopPropagation();
+		$.post('/auth/rpanel_ajax_new', { uzel_id: uzel_id, akce: 'oznac_prectene', stat_pravy_panel: 1 }, function(data) {});
+	});
+
+	$('.zobraz_prectene a').off('click').click(function(e){
+		$(this).hide();
+		$('.zobraz_prectene .prectene_nacitase').css('display', 'inline-block');
+		e.preventDefault();
+
+		$.post('/auth/rpanel_ajax_new', { akce: 'zobraz_prectene', stat_pravy_panel: 1 }, function(data) {
+			$('.zobraz_prectene').remove();
+			$('#prispevky').append(data);
+			$('.zobraz_prectene').nextAll().find('.oznac_prectene').hide();
+			
+		});
+	});
+
+	fix_myuco();
+	stat_fnc();
+};
+
+var fix_myuco = function() {
+
+	if (window.location.search.search('myuco') >= 0) { // ak je nastavene myuco
+		var myuco;
+		var sPageURL = window.location.search.substring(1);
+		var sURLVariables = sPageURL.split(';');
+		for (var i = 0; i < sURLVariables.length; i++) 
+		{
+			var sParameterName = sURLVariables[i].split('=');
+			if (sParameterName[0] == 'myuco') 
+			{
+				myuco = sParameterName[1];
+				break;
+			}
+		}
+
+		if (myuco) {
+			$('#panel a').each(function(){
+				var link = $(this).attr('href');
+				if (link.search('myuco') < 0 && link.search('javascript:') < 0) {
+
+					var hash = '';
+					if (link.search('#') >= 0) {
+						var parts = link.split('#', 2);
+						link = parts[0];
+						hash = '#'+parts[1];
+					}
+
+					if (link.search(/\?/) < 0) {
+						$(this).attr('href', link+'?myuco='+myuco+hash);
+					} else {
+						$(this).attr('href', link+';myuco='+myuco+hash);
+					}
+				}
+			})
+		}
+	}
+}
+
+var show_privileg_buttons = function() {
+	$('.odstranit_prispevek').show();
+	$('.vzdy_skryto').hide();
+}
+
+var hide_privileg_removed = function(selector) {
+	$(selector).find('.odstranit_prispevek').hide().closest('.prispevek').find('.uryvek').html('<strong>Příspěvek bude odstraněn.</strong><br /><span class="nedurazne">Změny se projeví po aktualizaci žebříčku.</span>');
+
+	$(selector).each(function(){ /* ak mame co skryt, tak */
+		$('.refresh_zebricek').css('border', '1px solid red');
+	});
+}
+
+$(document).ready(function() {
+	sort_ports();
+	stat_fnc();
+	reg_events();
+	
+
+	$('.pridat_prispevek_radios').buttonset();
+	$('#otv_form').button();
+	$('.vyber_focus_title').tooltip();
+	$('#panel .tooltip').tooltip();
+	$(document).ajaxComplete(reg_events); /* znovu registrujeme eventy po kazdom poziadavku */
+});
+</script>
+
+<script type="text/javascript"><!--
+$(document).ready(function(){
+        var url_string = '/auth/rpanel_ajax_new?setlang=';
+	var nbn = 0;
+        $.ajax({
+                type: 'POST',
+                url: url_string,
+                data: { "akce": "sppo", "hodnota": "port_udalosti_aktivita:port_vyveska_all"},
+                dataType: 'text',
+                success: function(dt){
+			if (dt != '') {
+				var vysl = dt.split('#_@@_#');
+        	                for (var i in vysl) {
+                	                var tx = vysl[i].split('#_#');
+                        	        if (tx[1] != '') {
+                                	        $('#'+tx[0]+'').html(tx[1]).show();
+						nbn++;
+	                                } else {
+						$('#'+tx[0]+'').attr('style', 'display:none');
+					}
+                        	}
+			}
+                }
+        });
+});
+//--></script>
+</head>
+
+<body class="cs" bgcolor="white">
+
+<div id="o2">
+
+<div id="obalka">
+
+<ul class="pristupnost">
+
+<li><a href="#menu">Skočit na navigaci</a></li><!-- Skip to navigation -->
+<li><a href="#panel">Skočit na panel</a></li><!-- Skip to panel -->
+</ul>
+
+<div id="hlavicka">
+
+<div id="logo"><a href="/auth/"><img src="/pics/design/14/b/logotyp-is-m.png" width="95" height="95" alt="Informační systém Masarykovy univerzity" title="Informační systém Masarykovy univerzity"></a></div><div id="nadpis-drobecky">
+
+<h2><a href="/auth/" title="Informační systém Masarykovy univerzity">Informační systém Masarykovy univerzity<span>&nbsp;</span></a></h2>
+<h1 id="nadpis">Osobní administrativa</h1>
+
+<div class="drobecky">
+
+<a href="https://is.muni.cz/" accesskey="1" title="Informační systém MU">IS MU</a>
+&gt; <a href="/auth/" accesskey="2" title="Osobní administrativa">Osobní administrativa</a></div>
+
+</div>
+
+<div id="identita">
+
+<div id="id-jazyk"><p><b>česky</b>&nbsp;| <a href="./?lang=en;setlang=en" title="switches IS into English">in English</a></p></div>
+
+<div id="id-odhlaseni"><a href="/auth/system/logout.pl"><img alt="Odhlášení ze systému" title="Odhlášení ze systému" src="/pics/design/14/b/ico/odhlaseni.png" width="16" height="16"></a></div>
+
+<div id="id-uzivatel"><b>Jana Gerstnerová</b>, učo&nbsp;<a href="/auth/osoba/438859">438859</a></div>
+
+</div> <!-- identita -->
+
+</div> <!-- hlavicka -->
+
+<div id="obsah">
+
+<div id="aplikace">
+
+
+
+
+<div id="ohrefhead" style="display: none;">
+<span class="nedurazne">Nemáte žádné zvýraznění, které by se zde mělo nyní zobrazit.</span> <a href="/auth/napoveda/jine/design#j_des_zvyrazneni">K čemu slouží Zvýraznění?</a>
+<div class="oper"><a href="/auth/system/zvyrazneno" id="tedzvyraz">Vše zvýrazněné v ISu</a> | <a href="/auth/?uzo=1">Zapnout zvýrazňování</a></div>
+
+<script type="text/javascript"><!--
+$(document).ready(function(){
+	var edmod = 0
+	var callback2 = function (e) {
+		if (edmod == 0) {
+			$(".ZZX").show(0);	
+			$(this).text('Vypnout zvýrazňování');
+			edmod = 1;
+		} else {
+			$(".ZZX").hide(0);	
+			$(this).text('Zapnout zvýrazňování');
+			$('#tedmodi').attr('href', '/auth/?uzo=1');
+			$('#tedmodi').unbind();
+			edmod = 0;
+		}
+		return false;
+	}
+	$("#tedmodi").bind('click', callback2);
+	$(".ZZX").hide(0);
+});
+//--></script>
+</div>
+
+
+
+<script type="text/javascript"><!--
+$('#ohrefhead').hide(0);
+//--></script>
+<noscript>
+&lt;div class="zdurazneni upozorneni"  &gt;&lt;h3 class="zdurazneni-nadpis"&gt;Upozornění:&lt;/h3&gt;&lt;h3&gt;Ve Vašem prohlížeči je zakázán JavaScript.&lt;/h3&gt;&lt;p&gt;Zapnete-li si JavaScript, aplikace IS budou příjemnější; např. při dohledávání údajů ve formulářích se samy posunou zpět na dohledávané místo.&lt;/p&gt;&lt;/div&gt;
+</noscript>
+
+		<script>
+		$(function() {
+			$('#zivot').prepend('<a href="/auth/zivot/" class="pocet">9+</a>');
+		});
+		</script>
+	
+
+<form action="/auth/vyhledavani/" id="fulltext" method="GET">
+<span class="search_obalka"><input type="text" name="search" value="" size="40" maxlength="200" class="dotaz" id="search_text"><span id="vymaz" title="Vymazat vepsaný text" style="visibility: hidden;">x</span></span><input type="submit" id="hledat" value="Vyhledat"> &nbsp; 
+<script type="text/javascript">
+/**
+ * Schovavani a zobrazovani vymazavaciho krizku
+ */
+function krizek(input) {
+	if ($(input).attr('value').length) {
+		$("span#vymaz").css('visibility', 'visible');
+	} else {
+		$("span#vymaz").css('visibility', 'hidden');
+	}
+}
+
+$(document).ready(function() {
+	var input = $("input#search_text");
+	krizek(input);
+	input.keyup(function(e){
+		krizek(input);
+	});
+	$("span#vymaz").click(function(e){
+		$(this).css('visibility', 'hidden');
+		input.attr('value', '');
+		e.preventDefault();
+	});
+	/* Po kliku na .search_obalka dej focus na input */
+	$(".search_obalka").click(function(){
+		$("input#search_text").focus();
+	});
+});
+</script>
+<script>
+					$(document).ready(function() {
+						$("#fulltext_navodek").click(function(e) {
+							e.preventDefault();
+							$(this).toggleClass("sbal rozbal");
+							$("#fulltext_navodek_obsah").toggle();
+						});
+					});
+				</script><a id="fulltext_navodek" href="/auth/napoveda/komunikace/vyhledavani" class="rozbal pruvodce">Nápověda</a> &nbsp; <a href="/auth/poradac/" id="fulltext_poradac">Pořadač</a>
+<div id="fulltext_navodek_obsah" class="row navodek" style="display:none"><div class="small-12 large-6 column"><p>Průvodce: <a class="okno" href="https://is.muni.cz/pruvodce/vyhledavani/index/" target="_blank">Jak funguje Vyhledávání</a></p>
+<p><b>Jak zadat dotaz, hledám-li…</b></p> <dl> <dt><b>…všechna slova:</b> &nbsp; <tt>psychologické experimenty</tt></dt> <dd> Hledá se bez ohledu na velikost písmen. Doplňuje se diakritika. Slova se skloňují a časují. Příklad: <tt>diplomova prace</tt> najde také <tt>V diplomové práci</tt>. </dd> <dt><b>…přesnou frázi:</b> &nbsp; <tt>"psychologické experimenty"</tt></dt> <dd> I bez použití uvozovek se přednostně vyhledají výsledky, kde je požadované slovní spojení blízko u sebe. Uvozovkami požadujete zcela přesný tvar (nedoplní se diakritika, neohýbá se). </dd> <dt><b>…bez některého slova:</b> &nbsp; <tt>experimenty -psychologické</tt></dt> <dd> Pomlčka zajistí, že se nevyhledají výsledky obsahující slovo za pomlčkou. Ale: pomlčka uvnitř slova funguje jinak (podobně jako přesná fráze výše, jen se doplňuje diakritika a zohledňuje skloňování: <tt>e-learning</tt> nebo <tt>Frýdek-Místek</tt>). </dd> </dl><nobr><a href="/auth/napoveda/komunikace/vyhledavani" target="_blank" class="okno">Podrobná nápověda</a></nobr></div></div>
+
+</form>
+
+
+<div id="trvmodd">
+<a href="./?mz=6" class="nedurazne">Úsporné zobrazení</a> |  <span class="trvmods"><span id="tstvr" style="display: none;">Nastavení: <a href="/auth/system/nastaveni?ups_rsvs=1">trvale vše rozbalit</a> | </span><a href="#" id="trvmodi">Rozbalit všechny odkazy</a></span>
+</div>
+
+<div id="t-rozcestnik">
+
+
+<div class="t-sekce" id="zivot"><a href="/auth/zivot/" class="pocet">9+</a>
+<h2><a href="/auth/zivot/">Život na MU</a></h2>
+
+<a href="/auth/zivot/oznacene/">S hvězdičkou</a>, <a href="/auth/zivot/nastaveni/">Nastavení</a>, <a href="/auth/df/zivot">Diskusní fórum</a>, <a href="/auth/napoveda/komunikace/zivot">Nápověda</a></div>
+
+
+<div class="t-sekce" id="M20">
+<h2><a href="/auth/mail/" title="E-mailová schránka; přesměrování e-mailu">Pošta</a> <span style="font-size: 0.8em; vertical-align: bottom;" title="počet nepřečtených zpráv">(89)</span><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a2" class="TPA" onclick="$('#a2').hide(); $('#b2').toggle(); $('#c2').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span>, <a href="/auth/lide/">Lidé</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a3" class="TPA" onclick="$('#a3').hide(); $('#b3').toggle(); $('#c3').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span></h2>
+
+<a href="/auth/mail/mail_posli">Poslat dopis</a>, <a href="/auth/mail/">Pošta v IS MU</a>, <a href="/auth/lide/">Hledání osoby</a>, <a href="/auth/osoba/438859">Moje Osobní stránka</a><div><span id="b2" class="TPB" style="display: none;"><i>Pošta:</i> <a href="/auth/mail/hromadne_adresy">Servisní adresy</a></span> <span id="c2" class="TPC" style="display: none;"><span id="d2" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'posta', 'hdn': 1, 'idd': '2' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a2').show(); $('#b2').toggle(); $('#c2').toggle(); $(this).data('datas', { 'ids': 'posta', 'hdn': 0, 'idd': '2' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div><div><span id="b3" class="TPB" style="display: none;"><i>Lidé:</i> <a href="/auth/lide/lide_edit">Editovat chování aplikace Lidé</a>, <a href="/auth/lide/foto_nastaveni">Zobrazování fotografie</a></span> <span id="c3" class="TPC" style="display: none;"><span id="d3" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'lide', 'hdn': 1, 'idd': '3' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a3').show(); $('#b3').toggle(); $('#c3').toggle(); $(this).data('datas', { 'ids': 'lide', 'hdn': 0, 'idd': '3' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div></div>
+
+
+<div class="t-sekce" id="M35">
+<h2><a href="/auth/student/">Student</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a4" class="TPA" onclick="$('#a4').hide(); $('#b4').toggle(); $('#c4').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span></h2>
+
+<a href="/auth/student/moje_znamky">Známky</a>, <a href="/auth/student/prihl_na_zkousky">Zkoušky</a>, <a href="/auth/student/poznamkove_bloky_nahled">Poznámkové bloky</a>, <a href="/auth/student/zapis">Registrace a zápis</a><span id="b4" class="TPB" style="display: none;">, <a href="/auth/student/zapis?akce=sablona">Reg. a zápis šablonou</a>, <a href="/auth/seminare/student">Semináře</a>, <a href="/auth/student/studijni_materialy">Studijní materiály</a>, <a href="/auth/dok/fmgr?use=fmgrag;ag=of_ma">Moje aktuální Poskytovny</a></span> <span id="c4" class="TPC" style="display: none;"><span id="d4" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'student', 'hdn': 1, 'idd': '4' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a4').show(); $('#b4').toggle(); $('#c4').toggle(); $(this).data('datas', { 'ids': 'student', 'hdn': 0, 'idd': '4' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div>
+
+
+<div class="t-sekce" id="M40">
+<h2><a href="/auth/rozvrh/">Rozvrh</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a5" class="TPA" onclick="$('#a5').hide(); $('#b5').toggle(); $('#c5').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span>, <a href="/auth/predmety/">Předměty</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a6" class="TPA" onclick="$('#a6').hide(); $('#b6').toggle(); $('#c6').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span>, <a href="/auth/studium_spolec/" title="Studijní agenda společná pro studenty i učitele">Studium</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a7" class="TPA" onclick="$('#a7').hide(); $('#b7').toggle(); $('#c7').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span>, <a href="/auth/uradovna/" title="Úřadovna – elektronická správa úředních agend">Úřadovna</a>, <a href="/auth/prihlaska/rozcesti">Přijímací řízení</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a9" class="TPA" onclick="$('#a9').hide(); $('#b9').toggle(); $('#c9').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span></h2>
+
+<a href="/auth/rozvrh/rozvrh_zobrazeni?typ=msu;vypsat=1;format=html">Můj rozvrh</a>, <a href="/auth/predmety/katalog">Hledání předmětu</a>, <a href="/auth/predmety/sablony">Prohlídka šablon</a>, <a href="/auth/predmety/obdobi">Harmonogram období</a>, <a href="/auth/rozpis/">Rozpisy (např. témat prací)</a>, <a href="/auth/obory/">Katalog oborů</a>, <a href="/auth/prihlaska/">Podání přihlášky</a><div><span id="b5" class="TPB" style="display: none;"><i>Rozvrh:</i> <a href="/auth/rozvrh/rozvrh_zobrazeni">Zobrazení rozvrhu</a>, <a href="/auth/rozvrh/rezervace_mistnosti">Rezervace místností</a>, <a href="/auth/kontakty/budovy_mistnosti">Číselník budov a místností</a></span> <span id="c5" class="TPC" style="display: none;"><span id="d5" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'rozvrh', 'hdn': 1, 'idd': '5' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a5').show(); $('#b5').toggle(); $('#c5').toggle(); $(this).data('datas', { 'ids': 'rozvrh', 'hdn': 0, 'idd': '5' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div><div><span id="b6" class="TPB" style="display: none;"><i>Předměty:</i> <a href="/auth/predmety/katalog_vypis">Výběr předmětů</a>, <a href="/auth/predmety/uplny_vypis">Úplný výpis</a>, <a href="/auth/predmety/atributy_predmety_vypis">Atributy předmětu</a></span> <span id="c6" class="TPC" style="display: none;"><span id="d6" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'predmety', 'hdn': 1, 'idd': '6' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a6').show(); $('#b6').toggle(); $('#c6').toggle(); $(this).data('datas', { 'ids': 'predmety', 'hdn': 0, 'idd': '6' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div><div><span id="b7" class="TPB" style="display: none;"><i>Studium:</i> <a href="/auth/zapis/statistika">Statistika zápisu</a>, <a href="/auth/ucitel/statistika_znamek">Statistika známek</a>, <a href="/auth/predmety/obory">Programy a obory</a>, <a href="/auth/studium/studijni">Studijní odd.</a></span> <span id="c7" class="TPC" style="display: none;"><span id="d7" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'studium', 'hdn': 1, 'idd': '7' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a7').show(); $('#b7').toggle(); $('#c7').toggle(); $(this).data('datas', { 'ids': 'studium', 'hdn': 0, 'idd': '7' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div><div><span id="b9" class="TPB" style="display: none;"><i>Přijímací řízení:</i> <a href="/auth/prihlaska/info">Vypisované obory</a></span> <span id="c9" class="TPC" style="display: none;"><span id="d9" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'prijimacky', 'hdn': 1, 'idd': '9' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a9').show(); $('#b9').toggle(); $('#c9').toggle(); $(this).data('datas', { 'ids': 'prijimacky', 'hdn': 0, 'idd': '9' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div></div>
+
+
+<div class="t-sekce" id="M10">
+<h2><a href="/auth/vyveska/">Vývěska</a>, <a href="/auth/vyveska/?typ=pozvanky">Pozvánky</a>, <a href="/auth/vyveska/?typ=inzerce">Inzerce</a>, <a href="/auth/diskuse/">Diskuse</a>, <a href="/auth/pruzkumy/">Průzkumy</a></h2>
+
+<a href="/auth/bb/?vloz_zpravu=1">Vložit na Vývěsku</a>, <a href="/auth/bb/uco_438859">Moje zprávy na Vývěsce</a>, <a href="/auth/infokampan/">Informační kampaně</a></div>
+
+
+<div class="t-sekce" id="externi_sluzby">
+<h2><a href="/auth/extservices/">Externí služby</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a15" class="TPA" onclick="$('#a15').hide(); $('#b15').toggle(); $('#c15').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span></h2>
+
+<span id="b15" class="TPB" style="display: none;"><span class="nedurazne"><b>GA:</b></span> <a href="https://mail.google.com/a/mail.muni.cz">Google mail</a>, <a href="https://drive.google.com/a/mail.muni.cz">Google Disk a Dokumenty</a>, <a href="https://www.google.com/calendar/hosted/mail.muni.cz">Google Kalendář</a>, <a href="https://keep.google.com/a/mail.muni.cz/">Google Keep</a></span> <span id="c15" class="TPC" style="display: none;"><span id="d15" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'externi_sluzby', 'hdn': 1, 'idd': '15' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a15').show(); $('#b15').toggle(); $('#c15').toggle(); $(this).data('datas', { 'ids': 'externi_sluzby', 'hdn': 0, 'idd': '15' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div>
+
+
+<div class="t-sekce" id="M50">
+<h2><a href="/auth/pers/" title="Osobní údaje, životopisy, stáže">Personální</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a16" class="TPA" onclick="$('#a16').hide(); $('#b16').toggle(); $('#c16').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span>, <a href="/auth/bt/trziste_prace/">Tržiště práce</a>, <a href="/auth/kontakty/" title="Místnosti, telefony, pracoviště">Kontakty</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a18" class="TPA" onclick="$('#a18').hide(); $('#b18').toggle(); $('#c18').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span></h2>
+
+<a href="/auth/people/kontrola_udaju">Kontrola a změny osobních údajů</a>, <a class="durazne" href="/auth/people/kontrola_udaju"><blink>Zkontrolujte a potvrďte</blink></a>, <a href="/auth/kontakty/">Telefonní seznam</a>, <a href="/auth/lide/pracoviste">Pracoviště</a><div><span id="b16" class="TPB" style="display: none;"><i>Personální:</i> <a href="/auth/zivotopisy/">Životopisy</a>, <a href="/auth/pers/studijni_pobyt">Studijní a pracovní pobyty, stáže</a></span> <span id="c16" class="TPC" style="display: none;"><span id="d16" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'personalni', 'hdn': 1, 'idd': '16' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a16').show(); $('#b16').toggle(); $('#c16').toggle(); $(this).data('datas', { 'ids': 'personalni', 'hdn': 0, 'idd': '16' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div><div><span id="b18" class="TPB" style="display: none;"><i>Kontakty:</i> <a href="/auth/pracoviste/">Správa pracovišť</a></span> <span id="c18" class="TPC" style="display: none;"><span id="d18" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'kontakty', 'hdn': 1, 'idd': '18' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a18').show(); $('#b18').toggle(); $('#c18').toggle(); $(this).data('datas', { 'ids': 'kontakty', 'hdn': 0, 'idd': '18' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div></div>
+
+
+<div class="t-sekce" id="M60">
+<h2><a href="/auth/setkavani/" title="Agendy pro kontakt a sdílení uživatelské obce s web 2.0 principy">Setkávání a spolužáci</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a19" class="TPA" onclick="$('#a19').hide(); $('#b19').toggle(); $('#c19').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span>, <a href="/auth/absolventi/" title="Přístup do IS zůstává doživotně. Agendy týkající se absolventů.">Absolventi</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a20" class="TPA" onclick="$('#a20').hide(); $('#b20').toggle(); $('#c20').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span></h2>
+
+<a href="/auth/lide/lide_znami?zobrazeni=o">Moji známí</a>, <a href="/auth/kruh/">Kruhy</a>, <a href="/auth/blog/">Blogy</a>, <a href="/auth/ln/">Záložky</a>, <a href="/auth/lide/aktivita">Aktivita</a>, <a href="/auth/ln/save">Vložit záložku</a>, <a href="/auth/ln/favourite/">Moje oblíbené záložky</a><div><span id="b19" class="TPB" style="display: none;"><i>Setkávání a spolužáci:</i> <a href="/auth/setkavani/zverejneni">Zveřejnění se</a>, <a href="/auth/ln/438859">Všechny moje záložky</a>, <a href="/auth/ln/hot/">Žhavé záložky</a>, <a href="/auth/ln/popular/">Populární záložky</a>, <a href="/auth/ln/recent/">Nejnovější záložky</a></span> <span id="c19" class="TPC" style="display: none;"><span id="d19" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'setkavani-spoluzaci', 'hdn': 1, 'idd': '19' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a19').show(); $('#b19').toggle(); $('#c19').toggle(); $(this).data('datas', { 'ids': 'setkavani-spoluzaci', 'hdn': 0, 'idd': '19' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div><div><span id="b20" class="TPB" style="display: none;"><i>Absolventi:</i> <a href="/auth/absolventi/posli_pozvanku">Pozvat absolventa do IS</a>, <a href="/auth/lide/?abs=1">Hledání absolventů</a>, <a href="/auth/lide/absolventi">Archiv absolventů a záv. prací</a></span> <span id="c20" class="TPC" style="display: none;"><span id="d20" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'absolvent', 'hdn': 1, 'idd': '20' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a20').show(); $('#b20').toggle(); $('#c20').toggle(); $(this).data('datas', { 'ids': 'absolvent', 'hdn': 0, 'idd': '20' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div></div>
+
+
+<div class="t-sekce" id="M70">
+<h2><a href="/auth/de/438859/" title="Prostor na předávání velkých souborů">Úschovna</a>, <a href="/auth/www/438859/" title="Prostor pro vlastní prezentaci nebo dlouhodobější uložení materiálů">Můj web</a>, <a href="/auth/dok/fmgr" title="Manažer pro správu souborů v různých úložištích v IS">Správce souborů</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a23" class="TPA" onclick="$('#a23').hide(); $('#b23').toggle(); $('#c23').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span>, <a href="/auth/do/" title="Dokumentový server – zápisy z jednání, normy, dokumenty, …">Dokumenty</a></h2>
+
+<a href="/auth/dok/depository_in">Vložení do cizí Úschovny</a>, <a href="/auth/dok/depository_prodl_expirace">Prodloužení expirace</a><div><span id="b23" class="TPB" style="display: none;"><i>Správce souborů:</i> <a href="/auth/dok/fmgr?use=fmgrag;ag=el_ma">Moje studijní materiály</a>, <a href="/auth/dok/fmgr?use=fmgrag;ag=of_ma">Moje poskytovny</a>, <a href="/auth/do/">Dokumentový server</a>, <a href="/auth/de/438859/">Úschovna</a>, <a href="/auth/www/438859/">Web</a>, <a href="/auth/th/438859/">Závěrečná práce</a>, <a href="/auth/re/438859/">Přijímárna</a></span> <span id="c23" class="TPC" style="display: none;"><span id="d23" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'spravce', 'hdn': 1, 'idd': '23' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a23').show(); $('#b23').toggle(); $('#c23').toggle(); $(this).data('datas', { 'ids': 'spravce', 'hdn': 0, 'idd': '23' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div></div>
+
+
+<div class="t-sekce" id="M80">
+<h2><a href="/auth/elportal/" title="E-learningové agendy a e-learningová díla">Elportál</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a25" class="TPA" onclick="$('#a25').hide(); $('#b25').toggle(); $('#c25').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span>, <a href="/auth/dril/" title="Inteligentní opakování s prodlevami (např. slovíček)">Dril</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a26" class="TPA" onclick="$('#a26').hide(); $('#b26').toggle(); $('#c26').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span>, <a href="/auth/publikace/" title="Publikační záznamy – vkládané uživateli, příp. přebírané z knihovních katalogů">Publikace</a>, <a href="/auth/repozitar/">Univerzitní repozitář</a></h2>
+
+<a href="/auth/publikace/vyhledavani?hledret=moje_publikace">Moje publikace</a><div><span id="b25" class="TPB" style="display: none;"><i>Elportál:</i> <a href="/auth/elportal/nove">Novinky</a>, <a href="/auth/elportal/zkusenosti/">Zkušenosti</a>, <a href="/auth/do/1499/el/zkzk/index.htm" target="_blank" class="okno">Postupy</a>, <a href="/auth/elportal/tipy/">Tipy</a>, <a href="/auth/elportal/studovna">E-publikace</a>, <a href="/auth/elearning/aplikace_index">Nepředmětové aplikace</a>, <a href="/auth/stech">Servisní středisko</a></span> <span id="c25" class="TPC" style="display: none;"><span id="d25" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'elportal', 'hdn': 1, 'idd': '25' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a25').show(); $('#b25').toggle(); $('#c25').toggle(); $(this).data('datas', { 'ids': 'elportal', 'hdn': 0, 'idd': '25' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div><div><span id="b26" class="TPB" style="display: none;"><i>Dril:</i> <a href="/auth/df/dril/">Diskuse</a>, <a href="/auth/elportal/nastroje/dril/">Tipy, jak začít</a></span> <span id="c26" class="TPC" style="display: none;"><span id="d26" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'dril', 'hdn': 1, 'idd': '26' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a26').show(); $('#b26').toggle(); $('#c26').toggle(); $(this).data('datas', { 'ids': 'dril', 'hdn': 0, 'idd': '26' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div></div>
+
+
+<div class="t-sekce" id="M90">
+<h2><a href="/auth/obchod/" title="Prodej zboží a služeb (konference, skripta, kurzy, …)">Obchodní centrum</a>, <a href="/auth/stipendia/">Stipendia</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a30" class="TPA" onclick="$('#a30').hide(); $('#b30').toggle(); $('#c30').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span>, <a href="/auth/student/koleje_index" title="Ubytování a koleje">Ubytování</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a31" class="TPA" onclick="$('#a31').hide(); $('#b31').toggle(); $('#c31').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span>, <span title="Názory na stravování v zařízeních SKM">Stravování</span></h2>
+
+<a href="/auth/obchod/moje_objednavky">Moje objednávky</a>, <a href="/auth/stipendia/studium_stipendia_prehled_student?zobrstippotvkvypl=Zobraz">Moje stipendia</a>, <a href="/auth/stipendia/student_cislo_uctu">Číslo účtu</a>, <a href="/auth/student/zadost_o_koleje">Žádost o koleje a její stav</a>, <a href="/auth/anketa/skm_hodnoceni_souhrn">Hodnocení stravovacích zařízení</a>, <a href="/auth/anketa/skm_hodnoceni_souhrn_cteni">Výsledky</a>, <a href="/auth/anketa/skm_hodnoceni_podnet">Zaslání podnětu SKM</a><div><span id="b30" class="TPB" style="display: none;"><i>Stipendia:</i> <a href="/auth/stipendia/student_ubyt_stip_zadost">Ubytovací stipendium</a>, <a href="/auth/stipendia/soc_stip_zadosti">Sociální stipendium</a>, <a href="/auth/stipendia/studium_reg_stip_prog_show">Stipendijní programy</a>, <a href="/do/mu/Uredni_deska/Predpisy_MU/Masarykova_univerzita/Vnitrni_predpisy_MU/Stipendijni_rad/" target="_blank" class="okno">Stipendijní řád</a></span> <span id="c30" class="TPC" style="display: none;"><span id="d30" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'stipendia', 'hdn': 1, 'idd': '30' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a30').show(); $('#b30').toggle(); $('#c30').toggle(); $(this).data('datas', { 'ids': 'stipendia', 'hdn': 0, 'idd': '30' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div><div><span id="b31" class="TPB" style="display: none;"><i>Ubytování:</i> <a href="/auth/student/zadost_o_koleje_volne_luzko">Žádost o volné lůžko</a>, <a href="/auth/student/koleje_stat_zadosti">Statistika žádostí</a>, <a href="http://www.skm.muni.cz/">www.skm.muni.cz</a></span> <span id="c31" class="TPC" style="display: none;"><span id="d31" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'koleje', 'hdn': 1, 'idd': '31' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a31').show(); $('#b31').toggle(); $('#c31').toggle(); $(this).data('datas', { 'ids': 'koleje', 'hdn': 0, 'idd': '31' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div></div>
+
+
+<div class="t-sekce" id="M100">
+<h2><a href="/auth/karty/" title="Čipové karty otvírající dveře ap.; Průkazy studenta">Karty</a>, <a href="/auth/skupiny/" title="Správa skupin osob pro regulaci přístupu (např. do učebny či do složky s dokumenty ap.) pomocí tzv. přístupových bodů">Skupiny osob</a>, <a href="/auth/volby/" title="Elektronické volby, např. do senátu">E-volby</a>, <a href="/auth/projekty/projekt" title="Řízení projektů – definování úkolů, přidělování lidem, sledování postupu">Projekty</a>, <a href="/auth/tiskarny/" title="Správa tisk z IS na lokální tiskárnu, skenování (zejména v e-learningu), převod skenovaných dokumentů na text">Tisk</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a37" class="TPA" onclick="$('#a37').hide(); $('#b37').toggle(); $('#c37').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span></h2>
+
+<a href="/auth/karty/email_pro_gts">Nastavte si e-mailovou adresu pro ISIC/ITIC</a><div><span id="b37" class="TPB" style="display: none;"><i>Tisk:</i> <a href="/auth/dok/zaradit_do_fronty_na_rozpoznani">Rozpoznávání (OCR)</a>, <a href="/auth/tiskarny/">Pokyny</a>, <a href="/auth/tiskarny/kdo_je_spravce">Správci tisku</a>, <a href="/auth/tiskarny/tiskarny">Správa tiskáren</a></span> <span id="c37" class="TPC" style="display: none;"><span id="d37" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'tisk', 'hdn': 1, 'idd': '37' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a37').show(); $('#b37').toggle(); $('#c37').toggle(); $(this).data('datas', { 'ids': 'tisk', 'hdn': 0, 'idd': '37' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div></div>
+
+
+<div class="t-sekce" id="M110">
+<h2><a href="/auth/hry/" title="Pro relaxaci">Hry</a>, <span title="Zajímavé webové stránky na univerzitě">Zajímavé na MU</span></h2>
+
+<a href="/auth/fotosbirka">Fotosbírka</a>, <a href="/auth/do/1499/">Akademický senát a RMU</a>, <a href="http://online.muni.cz/">Zpravodajský portál MU</a>, <a href="/auth/system/a_slovnik">Terminologický slovník</a>, <a href="http://www.rect.muni.cz/pcentrum/">Poradenské centrum</a>, <a href="https://www.jobcheckin.muni.cz/">JobCheckIN</a>, <a href="https://www.muni.cz/studenti/studentske-aktivity-a-spolky">Studentské spolky/aktivity</a></div>
+
+
+<div class="t-sekce" id="podnetovna">
+<h2><span title="Uvítáme vaše nápady a zkušenosti s používáním ISu">Podnětovny – vkládejte svoje podněty</span></h2>
+
+<a href="/auth/blog/ismu_denicek">Deníček ISu</a>, <a href="/auth/info/">Novinky</a>, <a href="/auth/blog/kapky">IS po kapkách</a>, <a href="/auth/df/podnetovna_is/">Podnětovna ISu</a></div>
+
+
+<div class="t-sekce" id="M120">
+<h2><a href="/auth/udalosti/" title="Souhrn nových záznamů v různých agendách; vč. možného odběru e-mailem">Události</a>, <a href="/auth/system/" title="Systém">Systém</a><span class="TRP"><img src="/pics/design/14/b/ico/i-plus3.png" id="a42" class="TPA" onclick="$('#a42').hide(); $('#b42').toggle(); $('#c42').toggle(); return false;" alt="Rozbalit více odkazů" title="Rozbalit více odkazů" width="16" height="16"></span>, <a href="/auth/design/?deuco=438859" title="Volba a nastavení designu stránek">Design</a>, <a href="/auth/napoveda/">Nápověda</a></h2>
+
+<a href="/auth/system/nastaveni">Nastavení systému</a>, <a href="/auth/system/planovane_zateze">Plánované zátěže</a>, <a href="/auth/system/heslo">Změna hesla</a>, <a href="/auth/system/prezdivka">Změna přezdívky</a>, <a href="/auth/napoveda/szr">Studijní a zkušební řád</a><div><span id="b42" class="TPB" style="display: none;"><i>Systém:</i> <a href="/auth/bezpecnost/">Bezpečnostní rizika</a>, <a href="/auth/prava/">Přístupová práva</a>, <a href="/auth/spravci/">Správci práv</a></span> <span id="c42" class="TPC" style="display: none;"><span id="d42" class="TPD"> | <a href="#" class="XYZ" onclick="$(this).data('datas', { 'ids': 'system', 'hdn': 1, 'idd': '42' }); return false;">Ponechat rozbalené</a></span> <a href="#" class="XXZ" onclick="$('#a42').show(); $('#b42').toggle(); $('#c42').toggle(); $(this).data('datas', { 'ids': 'system', 'hdn': 0, 'idd': '42' }); return false;"><img src="/pics/design/14/b/ico/i-close3.png" alt="Skrýt méně používané odkazy" title="Skrýt méně používané odkazy" width="16" height="16"></a></span></div></div>
+
+</div>
+
+</div> <!-- aplikace -->
+</div> <!-- obsah -->
+
+<div id="menu">
+					<script>
+						$(document).on('click', '.novy_design_switch', function(e){
+							e.preventDefault();
+							$.post('/auth/design_ajax.pl', { operace: 'novy_design_switch', hodnota: 1, naroz_nezobr: ($('#narozeniny-label-nezobrazovat').is(':checked') ? 1 : 0) }).done(function(){
+								location.reload();
+							});
+						});
+					</script>
+				
+				<link rel="stylesheet" type="text/css" href="/css/r6/unslider.css" media="screen">
+				<link rel="stylesheet" type="text/css" href="/css/r6/unslider-dots.css" media="screen">
+				 
+					<link rel="stylesheet" href="/css/14/jquery-ui-1.11.4.css">
+					<script type="text/javascript" src="/js/jquery-ui-1.11.4.custom.min.js"></script>
+				
+				<script src="/js/unslider-min.js"></script>
+				<script>
+				   $( function() {
+				    $( "#narozeniny_okno" ).dialog({
+				      autoOpen: false,
+				      modal: true,
+				      width: 1000,
+				      height: 680,
+				      dialogClass: "no-titlebar"
+				    });
+				    $( ".narozeniny_button" ).on( "click", function(e) {
+				      $( "#narozeniny_okno" ).dialog( "open" );
+				      e.stopPropagation();
+				    });
+
+				    $(".narozeniny-close").click(function () {
+					 $("#narozeniny_okno").dialog('close');
+				    });
+
+				    $(".narozeniny-tlacitko-zpet").click(function () {
+					 $("#narozeniny_okno").dialog('close');
+				    });
+				    $(".narozeniny-tlacitko-zacatek").click(function () {
+					 $(".narozeniny-tlacitko-zacatek").css("display", "none");
+					 $(".narozeniny-tlacitko-zpet").css("display", "block");
+					 $(".narozeniny-tlacitko-co-je-noveho-next").css("display", "block");
+					 $(".narozeniny-dekorace").css("display", "block");
+					 $(".narozeniny-pruvodce").css("display", "none");
+					 $(".unslider").css("display", "none");
+				    });
+				    $(".narozeniny-tlacitko-co-je-noveho").click(function () {
+					 $(".narozeniny-dekorace").css("display", "none");
+					 $(".narozeniny-pruvodce").css("display", "block");
+					 $(".unslider").css("display", "block");
+					 $(".narozeniny-tlacitko-co-je-noveho").css("display", "none");
+					 $(".narozeniny-tlacitko-zacatek").css("display", "block");
+					 $(function() {
+						$('.banner').unslider({
+							 nav: true,
+							 arrows: {
+								prev: '<a class="unslider-arrow prev">&#9664; Předchozí</a>',
+								next: '<a class="unslider-arrow next">Další &#9658;</a>'
+							 },
+							 index: 'first',
+						});
+					});
+				    });
+				    $(".narozeniny-tlacitko-co-je-noveho-next").click(function () {
+					 $(".narozeniny-dekorace").css("display", "none");
+					 $(".narozeniny-pruvodce").css("display", "block");
+					 $(".unslider").css("display", "block");
+					 $(".narozeniny-tlacitko-co-je-noveho-next").css("display", "none");
+					 $(".narozeniny-tlacitko-zacatek").css("display", "block");
+				    });
+
+				    $("#narozeniny-vyzkouset").click(function () {
+					if ($("#narozeniny-label-nezobrazovat").attr('checked')) {
+						$("#narozeniny-vyzkouset").attr('href','?zapnout_novy_design=1;narozeniny_nezobrazovat=1');
+					} else {
+						$("#narozeniny-vyzkouset").attr('href','?zapnout_novy_design=1');
+					}
+				    });
+				  
+				  } );
+				</script>
+				<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+				<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,500&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+				<style>
+					.no-titlebar .ui-dialog-titlebar {
+						display: none;	
+					}
+					.no-titlebar .ui-dialog-titlebar-close {
+						background: #fff;
+						border: 0px;
+					}
+					.no-titlebar .ui-icon-closethick {
+						  -ms-transform: scale(1.5); /* IE 9 */
+						  -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+						  transform: scale(1.5);
+					}
+					.narozeniny-stitek {
+						background-image: url(/pics/design/r/IS_stitek_cs.svg);
+						background-size: 140px;
+						background-repeat: no-repeat;
+						padding-top: 120px;
+						max-width: 184px;
+						min-width: 150px;
+						top: -5px;
+						position: relative;
+					}	
+					.narozeniny-close {
+						position: absolute;
+						top: 20px;
+						right: 20px;
+					}
+					.narozeniny-close a:hover, .narozeniny-close a:visited, .narozeniny-close a:link, .narozeniny-close a:active {
+							font-size: 24px;	
+							text-decoration: none;
+							text-decoration-color: #fff;
+							outline: none;
+					}
+					.narozeniny-podokno {
+						width: 800px;
+						left: 100px;
+						position: absolute;
+						display: block;
+					}
+					.narozeniny-dekorace {
+						background-image: url(/pics/design/r6/narozeniny-dekorace.jpg);
+						background-position: center;
+						background-size: contain;
+						width: 800px;
+						height: 455.5px;
+						left: 0px;
+						top: 100px;
+						position: absolute;
+						display: block;
+					}
+					.narozeniny-ramecek {
+						margin: 20px;
+						border: 1px solid #fff;
+						width: 760px;
+						height: 415.5px;
+					}
+					.narozeniny-nadpis {
+						font-family: "Roboto","Open Sans","Arial","sans-serif";
+						font-size: 26px;
+						font-weight: 100;
+						color: rgb(10,10,10);
+						margin-top: 10px;
+						margin-left: 15px;
+					}
+					.narozeniny-text {
+						position:absolute;
+						display: block;
+						bottom: 22px;
+						left: 23px;
+						height: 150px;
+						width: 756px;
+						background-color: rgba(254,254,254,0.8);
+						background-position: center;
+						background-size: contain;
+					}
+					.narozeniny-logo {
+						position: absolute;
+						display: block;
+						left: 0px;
+						top: 0px;
+						margin-top: 10px;
+						width: 110px;
+						height: 120px;
+						background-image: url(/pics/design/14/b/logotyp-is-m.png);
+						background-position: -5px -5px;
+						background-size: 60%;
+						background-repeat: no-repeat;
+						border-right: 1px solid #970E22;
+					}
+					.narozeniny-18let {
+						color: #970E22; 
+						font-family: "Roboto","Open Sans","Arial","sans-serif";
+						font-size: 32px;
+						font-weight: 300;
+						position: absolute;
+						display: block;
+						left: 120px;
+						top: 5px;
+					}
+					.narozeniny-tucne {
+						color: #970E22;
+						font-family: "Open Sans","Arial","sans-serif";
+						font-size: 14px;
+						font-weight: 400;
+						position: absolute;
+						display: block;
+						left: 120px;
+						top: 55px;
+					}
+					.narozeniny-upresneni {
+						color: rgb(10, 10, 10); 
+						font-family: "Open Sans","Arial","sans-serif";
+						font-size: 13px;
+						font-weight: 400;
+						position: absolute;
+						display: block;
+						left: 120px;
+						top: 85px;
+					}
+					.narozeniny-tlacitko-co-je-noveho, .narozeniny-tlacitko-co-je-noveho-next {
+						color: #002776 !important;
+						font-family: "Open Sans","Arial","sans-serif";
+						font-weight: 300;
+						font-size: 18px;
+						position: absolute;
+						top: 580px;
+						left: 10px;
+						outline: none;
+						text-decoration: none;
+					}
+					.narozeniny-tlacitko-co-je-noveho:hover, .narozeniny-tlacitko-co-je-noveho:active, .narozeniny-tlacitko-co-je-noveho-next:hover, .narozeniny-tlacitko-co-je-noveho-next:active {
+						text-decoration: underline !important;
+					}
+					.narozeniny-tlacitko-co-je-noveho-next {
+						display: none;
+					}
+					.narozeniny-tlacitko-zpet {
+						color: #002776 !important;
+						font-family: "Open Sans","Arial","sans-serif";
+						font-size: 14px;
+						background-color: #f8f8f8;
+						position: absolute;
+						top: 570px;
+						right: 173px;
+						border: 1px solid #e3e3e3;
+						padding: 10px 20px 10px 20px;
+						outline: none;
+						text-decoration: none;
+					}
+					.narozeniny-tlacitko-zacatek {
+						display: none;
+						color: #002776 !important;
+						font-family: "Open Sans","Arial","sans-serif";
+						font-size: 14px;
+						// background-color: #f8f8f8;
+						position: absolute;
+						top: 580px;
+						left: 10px;
+						// border: 1px solid #e3e3e3;
+						// padding: 10px 20px 10px 20px;
+						outline: none;
+						text-decoration: none;
+					}
+					.narozeniny-tlacitko-zacatek:hover, .narozeniny-tlacitko-zacatek:active {
+						text-decoration: underline !important;
+					}
+					.narozeniny-tlacitko-vyzkouset {
+						color: #fff !important;
+						font-family: "Open Sans","Arial","sans-serif";
+						font-size: 14px;
+						border: 1px solid #002776;
+						background-color: #002776;
+						position: absolute;
+						top: 570px;
+						right: 0px;
+						padding: 10px 20px 10px 20px;
+						outline: none;
+						text-decoration: none;
+					}
+					.narozeniny-checkbox-nezobrazovat {
+						color: #002776 !important;
+						font-family: "Open Sans","Arial","sans-serif";
+						font-weight: 400;
+						font-size: 12px;
+						position: absolute;
+						top: 630px;
+						right: 0px;
+						outline: none;
+						text-decoration: none;
+					}
+					#narozeniny-label-nezobrazovat {
+						display: inline-block;
+						vertical-align: middle;
+					}
+					.narozeniny-pruvodce {
+						display: none;
+						width: 800px;
+						height: 455.5px;
+						left: 0px;
+						top: 110px;
+						position: absolute;
+					}
+					.narozeniny-slide-obrazek {
+						position: relative;
+						top: 0px;
+						left: 100px;
+						width: 600px;
+						height: 250px;
+						border: 1px solid #e3e3e3;
+					}
+					.narozeniny-slide-obrazek img {
+						display: block;
+						margin: auto auto;
+					}
+					.narozeniny-slide-nadpis {
+						font-family: "Roboto","Open Sans","Arial","sans-serif";
+						font-size: 24px;
+						font-weight: 100;
+						color: rgb(10,10,10);
+						position: relative;
+						top: 50px;
+						text-align: center;
+					}
+					.narozeniny-slide-text {
+						font-family: "Open Sans","Arial","sans-serif";
+						font-size: 14px;
+						font-weight: 400;
+						color: rgb(10,10,10);
+						position: relative;
+						top: 60px;
+						width: 400px;
+						left: 200px;
+						text-align: center;
+					}
+					.banner { 
+						height: 455px !important;
+						min-height: 455px !important;
+						width: 800px !important;
+						position: absolute;
+					}
+					.banner li { 
+						list-style: none !important;
+						background-image: none !important;
+					}
+					.banner ul li { float: left; }
+					.unslider-nav { 
+						position: absolute;
+						top: 540px;
+						display: block;
+						left: 0;
+						right: 0;
+						z-index: 1000; 
+					}
+					.unslider-nav ol li {
+						border: 1px solid #002776; 
+					}
+					.unslider-nav ol li.unslider-active {
+						background: #002776;
+					}
+					.unslider-arrow {
+						font-family: "Open Sans","Arial","sans-serif";
+						font-size: 14px;
+						font-weight: 500;
+						/* padding: 20px; */
+						position: absolute;
+						top: 365px;
+						padding-left: 85px;
+						padding-right: 85px;
+						color: #002776 !important; 
+					}
+				</style>
+				<div style="padding: 5px; margin-bottom: 15px;"><a class="narozeniny_button novy_design_switch" style="color: #970E22; outline: none; text-transform: uppercase;" href="javascript:">nový IS</a></div>
+				
+		<span id="fixa"><a href="/auth/system/zvyrazneno" onclick="$('#ohrefhead').toggle();$('#statoap').show(0);return false;">ZVÝRAZNĚNÍ</a></span>
+<div class="obsah">
+<h2 class="pristupnost">Hlavní navigace</h2>
+<ul>
+<li class="lmindex"><a href="/auth/">IS.MUNI.CZ</a></li>
+</ul>
+<ul>
+<li class="lmposta"><a href="/auth/mail/">POŠTA</a></li>
+<li class="lmlide"><a href="/auth/lide/">LIDÉ</a></li>
+</ul>
+<ul>
+<li class="lmstudent"><a href="/auth/student/">STUDENT</a></li>
+</ul>
+<ul>
+<li class="lmrozvrh"><a href="/auth/rozvrh/rozvrh_zobrazeni?format=html;vypsat=1;typ=msu">ROZVRH</a></li>
+<li class="lmpredmety"><a href="/auth/predmety/">PŘEDMĚTY</a></li>
+<li class="lmstudium"><a href="/auth/studium_spolec/">STUDIUM</a></li>
+<li class="lmuradovna"><a href="/auth/uradovna/">ÚŘADOVNA</a></li>
+<li class="lmprijimacky"><a href="/auth/prihlaska/rozcesti">PŘIJÍMAČKY</a></li>
+</ul>
+<ul>
+<li class="lmvyveska"><a href="/auth/vyveska/">VÝVĚSKA</a></li>
+<li class="lmdiskuse"><a href="/auth/diskuse/">DISKUSE</a></li>
+</ul>
+<ul>
+<li class="lmpersonalni"><a href="/auth/pers/">PERSONÁLNÍ</a></li>
+</ul>
+<ul>
+<li class="lmsetkavani-spoluzaci"><a href="/auth/setkavani/">SETKÁVÁNÍ</a></li>
+</ul>
+<ul>
+<li class="lmuschovna"><a href="/auth/de/438859/">ÚSCHOVNA</a></li>
+<li class="lmmujweb"><a href="/auth/www/438859/?info=1">MŮJ WEB</a></li>
+<li class="lmdokumenty"><a href="/auth/do/">DOKUMENTY</a></li>
+</ul>
+<ul>
+<li class="lmelportal"><a href="/auth/elportal/">ELPORTÁL</a></li>
+<li class="lmdril"><a href="/auth/dril/">DRIL</a></li>
+<li class="lmpublikace"><a href="/auth/publikace/">PUBLIKACE</a></li>
+<li class="lmrepozitar"><a href="/auth/repozitar/">REPOZITÁŘ</a></li>
+</ul>
+<ul>
+<li class="lmoc"><a href="/auth/obchod/">OBCHODNÍ CENTRUM</a></li>
+<li class="lmstipendia"><a href="/auth/stipendia/">STIPENDIA</a></li>
+<li class="lmkoleje"><a href="/auth/student/koleje_index">UBYTOVÁNÍ</a></li>
+</ul>
+<ul>
+<li class="lmudalosti"><a href="/auth/udalosti/">UDÁLOSTI</a></li>
+<li class="lmsystem"><a href="/auth/system/">SYSTÉM</a></li>
+<li class="lmdesign"><a href="/auth/design/?deuco=438859">DESIGN</a></li>
+<li class="lmnapoveda"><a href="/auth/napoveda/">NÁPOVĚDA</a></li>
+</ul>
+<p>uživatelů 1161<br>operací 8342</p>
+</div> <!-- menu/obsah -->
+</div> <!-- menu -->
+
+<div id="ousko"><span class="cs" id="ouskoS" onclick="uiPrepniPanel()" title="Skrýt panel">&nbsp;</span></div>
+<div id="panel">
+
+                        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+			<style>
+			.narozeniny-banner {
+				width: 279px;
+				height: 160px;
+				background-image: url('/pics/design/r6/narozeniny-logo.png');
+				background-size: 50%;
+				background-position: center 50px;
+				background-color: #fff;
+				background-repeat: no-repeat;
+				border-bottom: 1px solid #f3f3f3;
+				border-top: 2px solid #970E22;
+				padding: 10px 10px 0px 10px;
+				text-align: center;
+			}
+			.narozeniny-banner a {
+				color: #970E22;
+				font-family: "Open Sans","Arial","sans-serif";
+                                font-weight: 300;
+				font-size: 16px;        
+				text-decoration: none;
+				text-decoration-color: #fff;
+                               	outline: none;
+			}
+			.narozeniny-tlacitko-vice {
+				color: #fff !important;
+				font-family: "Open Sans","Arial","sans-serif";
+				font-size: 13px !important;
+                                font-weight: 400 !important;
+				background-color: #002776;
+				padding: 10px 20px 10px 20px;
+				outline: none;
+				text-decoration: none;
+				position: relative;
+				display: block;
+				top: 73px;
+				left: 0px;
+			}
+			</style>
+			<div class="narozeniny-banner narozeniny_button">
+				<a href="javascript:">Informační systém MU<br>dostal k <b>18. narozeninám</b> nový kabát</a>
+				<a class="narozeniny-tlacitko-vice narozeniny_botton" href="javascript:">Zjistit více</a>
+			</div>
+		
+<div class="panel_border">
+    <h2 class="pristupnost">Panel</h2>
+<div id="sort_panel" style="margin: 0; padding: 0;" class="ui-sortable">	<div class="portlet" id="port-diskuse">
+	  <h3><a href="https://is.muni.cz/auth/diskuse/?stat_pravy_panel=1">Diskuse</a> <span class="sep">|</span> <a href="https://is.muni.cz/auth/vyveska/?stat_pravy_panel=1">Vývěska</a>
+<span class="ui-icon ui-icon-close button_p pointer close_button" title="Odstranit sekci"></span>
+<span class="ui-icon ui-icon-arrowthick-2-n-s button_p move ui-sortable-handle" title="Přesunout sekci"></span>
+</h3>
+<ul><li><a href="https://is.muni.cz/auth/diskuse/diskusni_forum?guz=56067;stat_pravy_panel=1" title="Filozofická fakulta">FF</a>&nbsp;(10), <a href="https://is.muni.cz/auth/diskuse/diskusni_forum?guz=56075;stat_pravy_panel=1" title="celá Masarykova univerzita">MU</a>&nbsp;(277), Plkárny: <a href="https://is.muni.cz/auth/diskuse/diskusni_forum?guz=56080;stat_pravy_panel=1" title="Plkárna FF">FF</a>, <a href="https://is.muni.cz/auth/diskuse/diskusni_forum?guz=56306;stat_pravy_panel=1" title="Plkárna MU">MU</a>,&nbsp;...</li>
+<li><a href="https://is.muni.cz/auth/diskuse/diskusni_forum_predmet?guz=74119649;stat_pravy_panel=1" title="FF:CJBC639 Historie fantastické literatury v českém a mezinárodním kontextu - přednáška (jaro 2018)">CJBC639</a>, <a href="https://is.muni.cz/auth/diskuse/diskusni_forum_predmet?guz=74117248;stat_pravy_panel=1" title="FF:VIKBA06 Informační věda 2 (jaro 2018)">VIKBA06</a>, <a href="https://is.muni.cz/auth/diskuse/diskusni_forum_predmet?guz=74117249;stat_pravy_panel=1" title="FF:VIKBA07 Nástroje a možnosti Internetu (jaro 2018)">VIKBA07</a>&nbsp;(60), <a href="https://is.muni.cz/auth/diskuse/diskusni_forum_predmet?guz=74117250;stat_pravy_panel=1" title="FF:VIKBA28 Úvod do studia médií (jaro 2018)">VIKBA28</a>, <a href="https://is.muni.cz/auth/diskuse/diskusni_forum_predmet?guz=74117251;stat_pravy_panel=1" title="FF:VIKBA30 Psaní odborných textů (jaro 2018)">VIKBA30</a>, <a href="https://is.muni.cz/auth/diskuse/diskusni_forum_predmet?guz=73906736;stat_pravy_panel=1" title="FF:VIKBB27 Blok expertů (jaro 2018)">VIKBB27</a>&nbsp;(1), <a href="https://is.muni.cz/auth/diskuse/diskusni_forum_predmet?guz=73906741;stat_pravy_panel=1" title="FF:VIKBB74 Katalogizace (jaro 2018)">VIKBB74</a>, <a href="https://is.muni.cz/auth/diskuse/diskusni_forum_predmet?guz=74117254;stat_pravy_panel=1" title="FF:VIK_PoZ Postupová zkouška (jaro 2018)">VIK_PoZ</a>, <a href="https://is.muni.cz/auth/diskuse/diskusni_forum_predmet?guz=73727666;stat_pravy_panel=1" title="PdF:ADAPT_AJ Adaptivní test Aj (jaro 2018)">ADAPT_AJ</a>, <a href="https://is.muni.cz/auth/diskuse/diskusni_forum_predmet?guz=74118450;stat_pravy_panel=1" title="FSpS:p943 Tělesná výchova - Jogalates (jaro 2018)">p943</a>,&nbsp;<a href="https://is.muni.cz/auth/cd/?stat_pravy_panel=1" title="Všechna předmětová diskusní fóra">...</a></li>
+<li id="port_vyveska_all" style=""> <a href="https://is.muni.cz/auth/vyveska/?stat_pravy_panel=1" id="vyveska">Vývěska&nbsp;<span class="rozbal">(45)</span></a>&nbsp;<span>| </span> <a href="https://is.muni.cz/auth/vyveska/?typ=pozvanky;stat_pravy_panel=1" id="pozvanky">Pozvánky&nbsp;<span class="rozbal">(20)</span></a>&nbsp;<div class="port_con" id="vyveska_c" style="display: none;"><div style="max-height: 200px; overflow-y: auto"><ul style="margin: 0"><li title="celá Masarykova univerzita > Studijní odbor">Studijní odbor &gt; <a href="https://is.muni.cz/auth/bb?guz=75383630;stat_pravy_panel=1">Mezinárodní projekt - výzkum on-line vzdělávání</a></li><li title="celá Masarykova univerzita > Centrum zahraniční spolupráce > Další">Další &gt; <a href="https://is.muni.cz/auth/bb?guz=75381649;stat_pravy_panel=1">Stipendia - Itálie</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75380480;stat_pravy_panel=1">Stříbrný olympionik se po pauze vrátí ke studiu na Muni</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75367323;stat_pravy_panel=1">Díky kontaktům z Kalifornie založil student firmu </a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75366615;stat_pravy_panel=1">Ceitec a Ústav organické chemie a biochemie uzavřely strategické partnerství</a></li><li title="celá Masarykova univerzita > Centrum zahraniční spolupráce > Další">Další &gt; <a href="https://is.muni.cz/auth/bb?guz=75360960;stat_pravy_panel=1">Summer Intensive Japanese Language Program at Seinan Gakuin University</a></li><li title="celá Masarykova univerzita > Centrum zahraniční spolupráce > Další">Další &gt; <a href="https://is.muni.cz/auth/bb?guz=75360729;stat_pravy_panel=1">Three Nobels in Economics (Engle, Merton and Spence) at the I.S.E.O Summer School, 21-30 June 2018,</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75345478;stat_pravy_panel=1">Kingdom Come: Reálný středověký boj nebo šerm podle příruček?</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75343773;stat_pravy_panel=1">Na práva jsem nezanevřel, říká frontman kapely Mirai </a></li><li title="Filozofická fakulta > Kalendář akcí">Kalendář akcí &gt; <a href="https://is.muni.cz/auth/bb?guz=75339180;stat_pravy_panel=1">Tematický večer: Estonský kulturní život</a></li><li title="Filozofická fakulta > Kalendář akcí">Kalendář akcí &gt; <a href="https://is.muni.cz/auth/bb?guz=75338841;stat_pravy_panel=1">The Estonian cultural life under the ideological pressure and the possibilities of the mental resist</a></li><li title="Filozofická fakulta > Kalendář akcí">Kalendář akcí &gt; <a href="https://is.muni.cz/auth/bb?guz=75338457;stat_pravy_panel=1">The Sovietization of the Estonian economical and everyday life in Stalinist era</a></li><li title="Filozofická fakulta > Kalendář akcí">Kalendář akcí &gt; <a href="https://is.muni.cz/auth/bb?guz=75339039;stat_pravy_panel=1">Projekce filmu Šermíř (Vehkleja)</a></li><li title="celá Masarykova univerzita > Centrum zahraniční spolupráce > Další">Další &gt; <a href="https://is.muni.cz/auth/bb?guz=75337521;stat_pravy_panel=1">Student conference in Maribor 2018 - call for applications</a></li><li title="celá Masarykova univerzita > Centrum zahraniční spolupráce > Další">Další &gt; <a href="https://is.muni.cz/auth/bb?guz=75337401;stat_pravy_panel=1">Maďarsko - stipendia pro VŠ učitele</a></li><li title="Filozofická fakulta > Kalendář akcí">Kalendář akcí &gt; <a href="https://is.muni.cz/auth/bb?guz=75335549;stat_pravy_panel=1">Why Did Hippies Act That Way? The Origins of Hippie Subcultural Formulae</a></li><li title="Filozofická fakulta > Kalendář akcí">Kalendář akcí &gt; <a href="https://is.muni.cz/auth/bb?guz=75330711;stat_pravy_panel=1">Prezentace knihy Barvy chorvatské Moravy</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75315906;stat_pravy_panel=1">Mladí právníci uspěli v moot courtu zaměřeném na právo ochranných známek</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75311665;stat_pravy_panel=1">Botanici spustili nejrozsáhlejší online databázi české flóry a vegetace</a></li><li title="Filozofická fakulta > Kalendář akcí">Kalendář akcí &gt; <a href="https://is.muni.cz/auth/bb?guz=75308244;stat_pravy_panel=1">Promýšlet Evropu dvacátého století: Rozpady, rozkoly a konce</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75289816;stat_pravy_panel=1">Pěvecký sbor Muni začíná novou éru. Můžete být u toho</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75288807;stat_pravy_panel=1">Středověk v Kingdom Come. Co je skutečnost a co fikce?</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75288806;stat_pravy_panel=1">Ledové květy za ozonovou díru nemůžou </a></li><li title="celá Masarykova univerzita > Kariérní centrum > Eventy">Eventy &gt; <a href="https://is.muni.cz/auth/bb?guz=75287348;stat_pravy_panel=1">Focus Group: Řekněte nám prosím, jak zlepšit kariérní poradenství</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75267401;stat_pravy_panel=1">Mladý informatik už ve druháku ladí přístroje v CERN </a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75264273;stat_pravy_panel=1">Marie Terezie odstartovala éru moderního státu. Film ale ukázal její mládí</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75250562;stat_pravy_panel=1">Loga mají reprezentovat vizi firmy, až pak vkus</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75243200;stat_pravy_panel=1">Sdílené laboratoře na Muni: Špičkové přístroje pod jednou střechou</a></li><li title="celá Masarykova univerzita > Centrum zahraniční spolupráce > Další">Další &gt; <a href="https://is.muni.cz/auth/bb?guz=75239120;stat_pravy_panel=1">WeTell Summer School - Special Guest announcement</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75226987;stat_pravy_panel=1">Průzkum mapování studijních cest má první výsledky a pokračuje druhou vlnou</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=74995166;stat_pravy_panel=1">Sto let česko-amerických vztahů. Ke studentům promluvil velvyslanec USA</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75225650;stat_pravy_panel=1">Používání wi-fi chce obezřetnost. Hlavně, když je bez hesla</a></li><li title="Filozofická fakulta > Další">Další &gt; <a href="https://is.muni.cz/auth/bb?guz=75223599;stat_pravy_panel=1">This Civilisation is Finished - Rupert Read, Ph.D. University of East Anglia, 26.3. na FSS</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75203912;stat_pravy_panel=1">Nejlepší diplomová práce je podle Siemensu z Muni. Věnuje se DNA</a></li><li title="celá Masarykova univerzita > Centrum zahraniční spolupráce > Další">Další &gt; <a href="https://is.muni.cz/auth/bb?guz=75170439;stat_pravy_panel=1">Conference DAAD “Quality Assurance &amp; Quality Development in Higher Education”</a></li><li title="celá Masarykova univerzita > Centrum zahraniční spolupráce > Další">Další &gt; <a href="https://is.muni.cz/auth/bb?guz=75200320;stat_pravy_panel=1">Study in Madrid this summer at the UAM</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75179499;stat_pravy_panel=1">Díky studentkám má Brno první veřejnou lednici </a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75176837;stat_pravy_panel=1">Nejde o to být knihovnou, ale dělat knihovnu</a></li><li title="celá Masarykova univerzita > Centrum zahraniční spolupráce > Další">Další &gt; <a href="https://is.muni.cz/auth/bb?guz=75175146;stat_pravy_panel=1">Summer school for International and European Studies 2018</a></li><li title="celá Masarykova univerzita > Počítačová síť MU">Počítačová síť MU &gt; <a href="https://is.muni.cz/auth/bb?guz=75171079;stat_pravy_panel=1">Krátkodobý výpadek UC Šlapanice 14.3.2018 v 8:00</a></li><li title="celá Masarykova univerzita > Centrum zahraniční spolupráce > Další">Další &gt; <a href="https://is.muni.cz/auth/bb?guz=75170570;stat_pravy_panel=1">Corfu Summer School 2018 - Ionian University</a></li><li title="celá Masarykova univerzita > Centrum zahraniční spolupráce > Další">Další &gt; <a href="https://is.muni.cz/auth/bb?guz=75170242;stat_pravy_panel=1">Summerschool 2018 - HFU</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75158877;stat_pravy_panel=1">Mafie se vrací do Brna. Vydejte se na měsíc do podsvětí</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75132767;stat_pravy_panel=1">Macek: Důvěrou v média otřásla polarizace společnosti</a></li><li title="celá Masarykova univerzita > Online.muni.cz">Online.muni.cz &gt; <a href="https://is.muni.cz/auth/bb?guz=75130826;stat_pravy_panel=1">Evropské druhy rostlin obsadily svět díky soužití s člověkem</a></li></ul></div><br>vstoupit do agendy <a href="https://is.muni.cz/auth/bb/sledovane/?stat_pravy_panel=1">Vývěska</a></div><div class="port_con" id="pozvanky_c" style="display: none;"><div style="max-height: 200px; overflow-y: auto"><ul style="margin: 0"><li title="Pozvánky > Další pozvánky">Další pozvánky &gt; <a href="https://is.muni.cz/auth/bb?guz=75394974;stat_pravy_panel=1">Hry bez hranic o5</a></li><li title="Pozvánky > Kultura">Kultura &gt; <a href="https://is.muni.cz/auth/bb?guz=75381296;stat_pravy_panel=1">Den Země aneb Fandíme fauně</a></li><li title="Pozvánky > Kultura">Kultura &gt; <a href="https://is.muni.cz/auth/bb?guz=75374722;stat_pravy_panel=1">Březnový literární kabaret POKUK</a></li><li title="Pozvánky > Vzdělávání">Vzdělávání &gt; <a href="https://is.muni.cz/auth/bb?guz=75363837;stat_pravy_panel=1">Na víkend s lejskovníkem</a></li><li title="Pozvánky > Vzdělávání">Vzdělávání &gt; <a href="https://is.muni.cz/auth/bb?guz=75319922;stat_pravy_panel=1">Aktivní zálohy</a></li><li title="Pozvánky > Sport">Sport &gt; <a href="https://is.muni.cz/auth/bb?guz=75305478;stat_pravy_panel=1">Dračí lodě</a></li><li title="Pozvánky > Sport">Sport &gt; <a href="https://is.muni.cz/auth/bb?guz=75305388;stat_pravy_panel=1">Trénink na zkoušku - Ultimate frisbee - čtvrtek 12.4.</a></li><li title="Pozvánky > Další pozvánky">Další pozvánky &gt; <a href="https://is.muni.cz/auth/bb?guz=75305260;stat_pravy_panel=1">Pekelný ráj Myanmaru / Barmy (Cestovatelská přednáška)</a></li><li title="Pozvánky > Další pozvánky">Další pozvánky &gt; <a href="https://is.muni.cz/auth/bb?guz=75305202;stat_pravy_panel=1">Asijské srdce: Tádžikistán a Pamír (Cestovatelská přednáška)</a></li><li title="Pozvánky > Vzdělávání">Vzdělávání &gt; <a href="https://is.muni.cz/auth/bb?guz=75289626;stat_pravy_panel=1">Book club: Freakonomie – Skrytá ekonomie všeho (Impact HUB Brno)</a></li><li title="Pozvánky > Další pozvánky">Další pozvánky &gt; <a href="https://is.muni.cz/auth/bb?guz=75287348;stat_pravy_panel=1">Focus Group: Řekněte nám prosím, jak zlepšit kariérní poradenství</a></li><li title="Pozvánky > Vzdělávání">Vzdělávání &gt; <a href="https://is.muni.cz/auth/bb?guz=74522606;stat_pravy_panel=1">Film: Poplach v dunajské deltě (2016)</a></li><li title="Pozvánky > Vzdělávání">Vzdělávání &gt; <a href="https://is.muni.cz/auth/bb?guz=75223599;stat_pravy_panel=1">This Civilisation is Finished - Rupert Read, Ph.D. University of East Anglia, 26.3. na FSS</a></li><li title="Pozvánky > Kultura">Kultura &gt; <a href="https://is.muni.cz/auth/bb?guz=75178926;stat_pravy_panel=1">Degustace biovín Vinařství Válka</a></li><li title="Pozvánky > Vzdělávání">Vzdělávání &gt; <a href="https://is.muni.cz/auth/bb?guz=75178815;stat_pravy_panel=1">Po Golanských výšinách a na jih kolem dokola</a></li><li title="Pozvánky > Vzdělávání">Vzdělávání &gt; <a href="https://is.muni.cz/auth/bb?guz=75178615;stat_pravy_panel=1">Barma nebo Myanmar?</a></li><li title="Pozvánky > Kultura">Kultura &gt; <a href="https://is.muni.cz/auth/bb?guz=75177935;stat_pravy_panel=1">Degustace vinařství Špaca</a></li><li title="Pozvánky > Vzdělávání">Vzdělávání &gt; <a href="https://is.muni.cz/auth/bb?guz=75177855;stat_pravy_panel=1">3N – nejdelší solná jeskyně světa</a></li><li title="Pozvánky > Kultura">Kultura &gt; <a href="https://is.muni.cz/auth/bb?guz=74077207;stat_pravy_panel=1">Fenomén Webber II</a></li><li title="Pozvánky > Vzdělávání">Vzdělávání &gt; <a href="https://is.muni.cz/auth/bb?guz=75153895;stat_pravy_panel=1">Chemie kolem nás - Dr. I. Lorencová, Národní technické muzeum, 19.3. na FSS</a></li></ul></div><br>vstoupit do agendy <a href="https://is.muni.cz/auth/bb/sledovane_p/?stat_pravy_panel=1">Pozvánky</a></div></li></ul>	</div>
+	<div class="portlet" id="port_udalosti_aktivita"><h3 style="line-height: 1.2em">
+<span class="ui-icon ui-icon-close button_p pointer close_button" title="Odstranit sekci"></span>
+<span class="ui-icon ui-icon-arrowthick-2-n-s button_p move" title="Přesunout sekci"></span>
+ <a href="https://is.muni.cz/auth/udalosti/zobraz_log?stat_pravy_panel=1" id="udalosti">Události <span class="rozbal">(10)</span></a>&nbsp;<br></h3><div class="port_con" id="udalosti_c" style="display: none;"><div style="max-height: 200px; overflow-y: auto"><ul style="margin: 0; padding-left: 0"><li>24. 3. 2018 14:26<br><span class="nedurazne">Nová zpráva</span>: <a href="https://is.muni.cz/auth/bb/pozvanky/dalsi_pozvanky/75394974/?stat_pravy_panel=1">Hry bez hranic o5</a> (na vývěsce: Pozvánky &gt; Další pozvánky)</li><li>23. 3. 2018 18:24<br><span class="nedurazne">Nová zpráva</span>: <a href="https://is.muni.cz/auth/bb/MU/online/75380480/?stat_pravy_panel=1">Stříbrný olympionik se po pauze vrátí ke studiu na Muni</a> (na vývěsce: celá Masarykova univerzita &gt; Online.muni.cz)</li><li>23. 3. 2018 18:24<br><span class="nedurazne">Nová zpráva</span>: <a href="https://is.muni.cz/auth/bb/MU/studijni_odbor/75383630/?stat_pravy_panel=1">Mezinárodní projekt - výzkum on-line vzdělávání</a> (na vývěsce: celá Masarykova univerzita &gt; Studijní odbor)</li><li>23. 3. 2018 18:14<br><span class="nedurazne">Nová zpráva</span>: <a href="https://is.muni.cz/auth/bb/MU/zahranicni_studia/dalsi/75381649/?stat_pravy_panel=1">Stipendia - Itálie</a> (na vývěsce: celá Masarykova univerzita &gt; Centrum zahraniční spolupráce &gt; Další)</li><li>23. 3. 2018 12:24<br><span class="nedurazne">Nová zpráva</span>: <a href="https://is.muni.cz/auth/bb/pozvanky/kultura/75381296/?stat_pravy_panel=1">Den Země aneb Fandíme fauně</a> (na vývěsce: Pozvánky &gt; Kultura)</li><li>23. 3. 2018 09:02<br><span class="nedurazne">Nová zpráva</span>: <a href="https://is.muni.cz/auth/bb/pozvanky/kultura/75374722/?stat_pravy_panel=1">Březnový literární kabaret POKUK</a> (na vývěsce: Pozvánky &gt; Kultura)</li><li>22. 3. 2018 22:18<br><span class="nedurazne">Nová zpráva</span>: <a href="https://is.muni.cz/auth/bb/MU/online/75366615/?stat_pravy_panel=1">Ceitec a Ústav organické chemie a biochemie uzavřely strategické partnerství</a> (na vývěsce: celá Masarykova univerzita &gt; Online.muni.cz)</li><li>22. 3. 2018 22:12<br><span class="nedurazne">Nová zpráva</span>: <a href="https://is.muni.cz/auth/bb/MU/zahranicni_studia/dalsi/75360729/?stat_pravy_panel=1">Three Nobels in Economics</a> (Engle, Merton and Spence) at the I.S.E.O Summer School, 21-30 June 2018, (na vývěsce: celá Masarykova univerzita &gt; Centrum zahraniční spolupráce &gt; Dal</li><li>22. 3. 2018 22:08<br><span class="nedurazne">Nová zpráva</span>: <a href="https://is.muni.cz/auth/bb/MU/online/75367323/?stat_pravy_panel=1">Díky kontaktům z Kalifornie založil student firmu</a> (na vývěsce: celá Masarykova univerzita &gt; Online.muni.cz)</li><li>22. 3. 2018 22:08<br><span class="nedurazne">Nová zpráva</span>: <a href="https://is.muni.cz/auth/bb/MU/zahranicni_studia/dalsi/75360960/?stat_pravy_panel=1">Summer Intensive Japanese Language Program at Seinan Gakuin University</a> (na vývěsce: celá Masarykova univerzita &gt; Centrum zahraniční spolupráce &gt; Další)</li></ul></div><br>vstoupit do agendy <a href="https://is.muni.cz/auth/udalosti/zobraz_log?stat_pravy_panel=1">Události</a></div></div>
+</div>
+<div class="nastaveni_panelu">
+<h3>
+	<a href="https://is.muni.cz/auth/system/nastaveni?stat_pravy_panel=1#pravy_panel_nastaveni">Nastavení panelu</a>
+</h3>
+</div>
+
+</div>
+</div> <!-- panel -->
+
+<div id="paticka" class="row">
+  <div id="paticka-obsah">
+    <div id="odkazy-rel" class="column medium-6">
+      <h3>Relevantní odkazy<span>&nbsp;</span></h3>
+<ul>
+<li> <a href="/auth/">Osobní administrativa</a>
+</li></ul>
+
+    </div><!-- odkazy-rel -->
+    <div id="odkazy-vlastni" class="column medium-6">
+      <h3>Oblíbené záložky<span>&nbsp;</span></h3>
+
+      <p><a href="/auth/zalozky/favourite" class="nedurazne">Upravit oblíbené záložky</a></p>
+
+    </div><!-- odkazy-vlastni -->	<hr>
+
+    <div id="paticka-odkazy" class="column">
+<a href="#hlavicka" class="nahoru" title="Skočit na začátek stránky">Nahoru</a> | <a href="/auth/napoveda/" target="_blank" class="okno">Nápověda</a> | <a href="http://is.muni.cz/system/cas" target="_blank" class="okno">Aktuální datum a čas:</a> 24. 3. 2018 18:09, 12. (<a href="/auth/rozvrh/sl_tyden">sudý</a>) kalendářní týden | <a href="/auth/system/posledni_operace.pl">Poslední operace</a> | <a href="/auth/system/logout.pl" class="ico"><img alt="Odhlášení ze systému" title="Odhlášení ze systému" src="/pics/design/14/b/ico/logoff-16.png" width="16" height="16"></a> <a href="/auth/system/logout.pl" title="Odhlášení ze systému">Odhlášení</a>
+<p id="kontakty">Kontakty: <a href="/auth/mail/mail_posli?to=istech%40fi.muni.cz">istech@fi.muni.cz</a>, <a href="/auth/studium/studijni">studijní odd.</a>, <a href="/auth/spravci/">správci práv</a>, <a href="/auth/istech/">is-technici</a>, <a href="/auth/etech/">e-technici</a>, <a href="/auth/lvt/">IT podpora</a> | <a href="https://is.muni.cz/nas_system/" target="_blank" class="okno">Více o Informačním systému</a></p>
+
+    </div><!-- paticka-odkazy -->
+  </div><!-- paticka-obsah -->
+</div><!-- paticka -->
+
+</div> <!-- obalka -->
+</div> <!-- o2 -->
+
+
+<div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div><div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front no-titlebar ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="narozeniny_okno" style="display: none; position: absolute;" aria-labelledby="ui-id-1"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix ui-draggable-handle"><span id="ui-id-1" class="ui-dialog-title">&nbsp;</span><button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="Close"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">Close</span></button></div><div id="narozeniny_okno" class="narozeniny_dialog ui-dialog-content ui-widget-content" style="top: -5px;">
+					<div class="narozeniny-close"><a href="javascript:">✕</a></div>
+					<div class="narozeniny-podokno">
+					  <div class="narozeniny-stitek"></div>
+					  <div class="narozeniny-dekorace">
+						<div class="narozeniny-ramecek">
+							<div class="narozeniny-nadpis">Informační systém MU slaví narozeniny!</div>
+							<div class="narozeniny-text">
+								<div class="narozeniny-logo"></div>
+								<div class="narozeniny-18let">18 let ISu</div>
+								<div class="narozeniny-tucne">Informační systém MU dostal k 18. narozeninám nový kabát.</div>
+								<div class="narozeniny-upresneni">
+								Vývojový tým IS MU pro Vás připravil novou verzi Informačního systému.<br>Věříme, že se i Vám bude líbit.
+								</div>
+							</div>
+						</div>
+					  </div>
+					    <div class="narozeniny-pruvodce banner">
+					    <ul>
+						<li>
+							<div class="narozeniny-slide-obrazek" style="border: 0px;"><img src="/pics/design/r6/narozeniny-slide-1.svg" style="height: 100%"></div>
+							<div class="narozeniny-slide-nadpis">Vylepšené ovládání</div>
+							<div class="narozeniny-slide-text">
+							IS obsahuje spoustu funkcí a informací. Vylepšili jsme ovládání a navigaci tak, aby byla práce s ním jednodušší.
+							</div>
+						</li>
+						<li>
+							<div class="narozeniny-slide-obrazek"><img src="/pics/design/r6/narozeniny-slide-2.png" style="height: 100%"></div>
+							<div class="narozeniny-slide-nadpis" style="text-transform: uppercase;">Moje aplikace</div>
+							<div class="narozeniny-slide-text">
+							V levém menu jsme ponechali pouze to nejdůležitější. Můžete si je snadno rozšířit dle Vašich potřeb, stačí použít ikonku připínáčku vedle názvu každé stránky.
+							</div>
+						</li>
+						<li>
+							<div class="narozeniny-slide-obrazek"><img src="/pics/design/r6/narozeniny-slide-3.png" style="width: 100%; margin: 10% auto;"></div>
+							<div class="narozeniny-slide-nadpis">Chytré vyhledávání</div>
+							<div class="narozeniny-slide-text">
+							Najít nějakou aplikaci nebo informaci je nyní ještě jednodušší s novým Vyhledáváním. Snadno lze najít i kontakt na libovolnou osobu na MU, což dříve zajišťovala aplikace <b>Lidé</b>.
+							</div>
+						</li>
+						<li>
+							<div class="narozeniny-slide-obrazek"><img src="/pics/design/r6/motiv/3/header-large.png" style="height: 100%"></div>
+							<div class="narozeniny-slide-nadpis">Moderní vzhled</div>
+							<div class="narozeniny-slide-text">
+							Aby práce s IS byla příjemná, vylepšili jsme i&nbsp;jeho vzhled. Navíc si každý může vybrat motiv, který se mu líbí.
+							</div>
+						</li>
+						<li>
+							<div class="narozeniny-slide-obrazek"><img src="/pics/design/r6/narozeniny-slide-5.png" style="height: 100%;"></div>
+							<div class="narozeniny-slide-nadpis">Mobilní verze</div>
+							<div class="narozeniny-slide-text">
+							IS nyní ještě lépe funguje na mobilním telefonu a tabletu. Není nutné instalovat žádnou aplikaci. Stačí na mobilu zadat is.muni.cz jako obvykle.
+							</div>
+						</li>
+						<li>
+							<div class="narozeniny-slide-obrazek"><img src="/pics/design/r6/narozeniny-slide-6.png" style="width: 98%;  margin: 0px 5px;"></div>
+							<div class="narozeniny-slide-nadpis">Přepracované aplikace</div>
+							<div class="narozeniny-slide-text">
+							Titulní stránka, rozcestníky, Správce souborů a známky jsou příklady přepracovaných aplikací. Ostatní budeme vylepšovat postupně.
+							</div>
+						</li>
+					    </ul>
+					  </div>
+					  <img src="/pics/design/r6/tresen.png" style="width: 70px; position: relative; top: 450px" class="narozeniny-tlacitko-co-je-noveho">
+					  <img src="/pics/design/r6/tresen.png" style="width: 70px; position: relative; top: 450px" class="narozeniny-tlacitko-co-je-noveho-next">
+					  <a class="narozeniny-tlacitko-co-je-noveho" href="javascript:" style="position: absolute; left: 80px; top: 600px;">Co je v IS nového?</a>
+					  <a class="narozeniny-tlacitko-co-je-noveho-next" href="javascript:" style="position: absolute; left: 80px; top: 600px;">Co je v IS nového?</a>
+					  <a class="narozeniny-tlacitko-zpet" href="javascript:">Zpět do starého ISu</a>
+					  <a class="narozeniny-tlacitko-zacatek" href="javascript:">Zpět na začátek</a>
+					  <a id="narozeniny-vyzkouset" class="narozeniny-tlacitko-vyzkouset novy_design_switch" href="/auth/?zapnout_novy_design=1">Vyzkoušet nový IS</a>
+					  <div class="narozeniny-checkbox-nezobrazovat"><input id="narozeniny-label-nezobrazovat" type="checkbox"><label for="narozeniny-label-nezobrazovat"> tuto stránku příště nezobrazovat</label></div>
+					</div>
+				</div><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div></div><div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"><div style="display: none;">Odstranit sekci</div><div>Odstranit sekci</div></div><div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"><div>Přesunout sekci</div></div></body></html>
